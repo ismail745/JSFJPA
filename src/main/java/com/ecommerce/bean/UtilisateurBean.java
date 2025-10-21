@@ -16,7 +16,7 @@ import java.util.List;
 @SessionScoped
 public class UtilisateurBean implements Serializable {
     
-    @PersistenceContext
+    @PersistenceContext(unitName = "EcommercePU")
     private EntityManager em;
     
     private Utilisateur utilisateur = new Utilisateur();

@@ -17,7 +17,7 @@ import java.util.List;
 @SessionScoped
 public class VitrineBean implements Serializable {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "EcommercePU")
     private EntityManager em;
     
     @Inject
@@ -31,6 +31,37 @@ public class VitrineBean implements Serializable {
     @PostConstruct
     public void init() {
         try {
+            chargerCategories();
+            chargerProduits();
+            // Créer des données de test si nécessaire
+            if (categories.isEmpty()) {
+                creerDonneesDeTest();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void creerDonneesDeTest() {
+        try {
+            // Créer une catégorie de test
+            Categorie cat1 = new Categorie("Électronique", "Produits électroniques");
+            em.persist(cat1);
+            
+            Categorie cat2 = new Categorie("Livres", "Livres et manuels");
+            em.persist(cat2);
+            
+            // Créer des produits de test
+            Produit p1 = new Produit("Ordinateur Portable", "Un ordinateur portable performant", 999.99, 10);
+            p1.setCategorie(cat1);
+            em.persist(p1);
+            
+            Produit p2 = new Produit("Livre Java", "Manuel d'apprentissage Java", 29.99, 50);
+            p2.setCategorie(cat2);
+            em.persist(p2);
+            
+            em.flush();
+            // Recharger les données
             chargerCategories();
             chargerProduits();
         } catch (Exception e) {

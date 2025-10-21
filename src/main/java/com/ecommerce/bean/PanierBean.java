@@ -16,7 +16,7 @@ import java.io.Serializable;
 @SessionScoped
 public class PanierBean implements Serializable {
     
-    @PersistenceContext
+    @PersistenceContext(unitName = "EcommercePU")
     private EntityManager em;
     
     @Inject
