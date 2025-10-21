@@ -32,26 +32,26 @@
 
                         <div class="form-group">
                             <p:outputLabel for="prenom" value="Prénom:" />
-                            <p:inputText id="prenom" value="#{}" />
+                            <p:inputText id="prenom" value="#{userBean.prenom}" />
                         </div>
 
                         <div class="form-group">
                             <p:outputLabel for="nom" value="Nom:" />
-                            <p:inputText id="nom" value="#{}" />
+                            <p:inputText id="nom" value="#{userBean.nom}" />
                         </div>
 
                         <div class="form-group">
                             <p:outputLabel for="email" value="Email:" />
-                            <p:inputText id="email" value="#{}" />
+                            <p:inputText id="email" value="#{userBean.email}" />
                         </div>
 
                         <div class="form-group">
                             <p:outputLabel for="password" value="Mot de passe:" />
-                            <p:password id="password" value="#{}" />
+                            <p:password id="password" value="#{userBean.password}" />
                         </div>
 
                         <div class="form-actions">
-                            <p:commandButton value="S'inscrire" action="#{}" styleClass="ui-button-primary" />
+                            <p:commandButton value="S'inscrire" action="#{userBean.register()}" styleClass="ui-button-primary" />
                             <p:button value="Retour" outcome="index" styleClass="ui-button-secondary" />
                         </div>
                     </p:panel>
