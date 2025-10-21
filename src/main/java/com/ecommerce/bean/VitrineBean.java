@@ -30,8 +30,12 @@ public class VitrineBean implements Serializable {
     
     @PostConstruct
     public void init() {
-        chargerProduits();
-        chargerCategories();
+        try {
+            chargerCategories();
+            chargerProduits();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     public void chargerProduits() {

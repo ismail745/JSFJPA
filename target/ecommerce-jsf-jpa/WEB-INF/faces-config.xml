@@ -17,4 +17,13 @@
         </navigation-case>
     </navigation-rule>
     
+    <!-- Global navigation: inscription -->
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>inscription</from-outcome>
+            <to-view-id>/inscription.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
 </faces-config>
