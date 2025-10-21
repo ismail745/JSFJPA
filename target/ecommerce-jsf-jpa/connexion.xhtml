@@ -8,7 +8,30 @@
 <h:head>
     <title>E-Commerce JSF - Connexion</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<!--    <h:outputStylesheet name="css/style.css" />-->
+    <h:outputStylesheet name="css/style.css" />
+    <style>
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #555;
+        }
+        .form-group input, .form-group .ui-password {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .form-group input:focus, .form-group .ui-password:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+        }
+    </style>
 </h:head>
 
 <h:body>
@@ -21,7 +44,7 @@
                 <p:menuitem value="Panier" outcome="panier" icon="pi pi-shopping-cart" />
             </p:menubar>
         </header>
-        
+
         <main>
             <div class="auth-container">
                 <h:form>
@@ -29,21 +52,21 @@
                         <p:messages id="messages" showDetail="true" closable="true">
                             <p:autoUpdate />
                         </p:messages>
-                        
+
                         <div class="form-group">
                             <p:outputLabel for="email" value="Email:" />
-                            <p:inputText id="email" value="#{utilisateurBean.email}" required="true" 
+                            <p:inputText id="email" value="#{utilisateurBean.email}" required="true"
                                         requiredMessage="Veuillez saisir votre email" />
                         </div>
-                        
+
                         <div class="form-group">
                             <p:outputLabel for="password" value="Mot de passe:" />
-                            <p:password id="password" value="#{utilisateurBean.motDePasse}" required="true" 
+                            <p:password id="password" value="#{utilisateurBean.motDePasse}" required="true"
                                       requiredMessage="Veuillez saisir votre mot de passe" />
                         </div>
-                        
+
                         <div class="form-actions">
-                            <p:commandButton value="Se connecter" action="#{utilisateurBean.connecter}" 
+                            <p:commandButton value="Se connecter" action="#{utilisateurBean.connexion}"
                                            update="@form" styleClass="ui-button-primary" />
                             <p:button value="S'inscrire" outcome="inscription" styleClass="ui-button-secondary" />
                         </div>
@@ -51,9 +74,9 @@
                 </h:form>
             </div>
         </main>
-        
+
         <footer>
-            <p>2023 E-Commerce JSF. Tous droits réservés.</p>
+            <p>© 2023 E-Commerce JSF. Tous droits réservés.</p>
         </footer>
     </div>
 </h:body>

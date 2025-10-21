@@ -9,7 +9,30 @@
     <title>E-Commerce JSF - Inscription</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <h:outputStylesheet name="css/style.css" />
-    </h:head>
+    <style>
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #555;
+        }
+        .form-group input, .form-group .ui-password {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .form-group input:focus, .form-group .ui-password:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+        }
+    </style>
+</h:head>
 
 <h:body>
     <div class="container">
@@ -21,7 +44,7 @@
                 <p:menuitem value="Panier" outcome="panier" icon="pi pi-shopping-cart" />
             </p:menubar>
         </header>
-        
+
         <main>
             <div class="auth-container">
                 <h:form>
@@ -32,22 +55,22 @@
 
                         <div class="form-group">
                             <p:outputLabel for="prenom" value="Prénom:" />
-                            <p:inputText id="prenom" value="#{userBean.prenom}" />
+                            <p:inputText id="prenom" value="#{userBean.prenom}" required="true" />
                         </div>
 
                         <div class="form-group">
                             <p:outputLabel for="nom" value="Nom:" />
-                            <p:inputText id="nom" value="#{userBean.nom}" />
+                            <p:inputText id="nom" value="#{userBean.nom}" required="true" />
                         </div>
 
                         <div class="form-group">
                             <p:outputLabel for="email" value="Email:" />
-                            <p:inputText id="email" value="#{userBean.email}" />
+                            <p:inputText id="email" value="#{userBean.email}" required="true" type="email" />
                         </div>
 
                         <div class="form-group">
                             <p:outputLabel for="password" value="Mot de passe:" />
-                            <p:password id="password" value="#{userBean.password}" />
+                            <p:password id="password" value="#{userBean.password}" required="true" />
                         </div>
 
                         <div class="form-actions">
@@ -58,9 +81,9 @@
                 </h:form>
             </div>
         </main>
-        
+
         <footer>
-            <p>&#169; 2023 E-Commerce JSF. Tous droits réservés.</p>
+            <p>© 2023 E-Commerce JSF. Tous droits réservés.</p>
         </footer>
     </div>
 </h:body>

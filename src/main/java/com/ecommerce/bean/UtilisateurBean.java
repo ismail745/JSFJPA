@@ -7,8 +7,11 @@ import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.faces.context.FacesContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -87,6 +90,11 @@ public class UtilisateurBean implements Serializable {
     }
     
     public String deconnexion() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
         utilisateurConnecte = null;
         return "index?faces-redirect=true";
     }

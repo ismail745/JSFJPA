@@ -8,7 +8,33 @@
 <h:head>
     <title>E-Commerce JSF - Panier</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<!--    <h:outputStylesheet name="css/style.css" />-->
+    <h:outputStylesheet name="css/style.css" />
+    <style>
+        .cart-table {
+            width: 100%;
+            margin-top: 1rem;
+        }
+        .cart-total {
+            background-color: #e9ecef;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+        .cart-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .empty-cart {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+    </style>
 </h:head>
 
 <h:body>
@@ -19,7 +45,7 @@
                 <p:menuitem value="Accueil" outcome="index" icon="pi pi-home" />
                 <p:menuitem value="Produits" outcome="vitrine" icon="pi pi-shopping-bag" />
                 <p:menuitem value="Panier" outcome="panier" icon="pi pi-shopping-cart" />
-                
+
                 <f:facet name="options">
                     <h:form rendered="#{!utilisateurBean.connecte}">
                         <p:button value="Connexion" outcome="connexion" icon="pi pi-sign-in" styleClass="ui-button-info" />
@@ -27,67 +53,72 @@
                     </h:form>
                     <h:form rendered="#{utilisateurBean.connecte}">
                         <p:outputLabel value="Bonjour, #{utilisateurBean.utilisateurConnecte.prenom}" style="margin-right: 10px;" />
-                        <p:commandButton value="Déconnexion" action="#{utilisateurBean.deconnecter}" icon="pi pi-sign-out" styleClass="ui-button-danger" />
+                        <p:commandButton value="Déconnexion" action="#{utilisateurBean.deconnexion}" icon="pi pi-sign-out" styleClass="ui-button-danger" />
                     </h:form>
                 </f:facet>
             </p:menubar>
         </header>
-        
+
         <main>
             <h:form id="cartForm">
-                <p:panel header="Articles dans votre panier" rendered="#{not empty panierBean.panier.lignesPanier}">
-                    <p:dataTable value="#{panierBean.panier.lignesPanier}" var="ligne" id="cartTable">
+                <p:panel header="Articles dans votre panier" rendered="#{not empty panierBean.panier.lignesPanier}" styleClass="ui-panel-grid">
+                    <p:dataTable value="#{panierBean.panier.lignesPanier}" var="ligne" id="cartTable" styleClass="cart-table">
                         <p:column headerText="Produit">
-                            <h:outputText value="#{ligne.produit.nom}" />
+                            <div class="product-info">
+                                <h:graphicImage value="#{ligne.produit.image}" alt="#{ligne.produit.nom}" styleClass="product-image-small" />
+                                <h:outputText value="#{ligne.produit.nom}" />
+                            </div>
                         </p:column>
-                        
+
                         <p:column headerText="Prix unitaire">
                             <h:outputText value="#{ligne.prixUnitaire} €" />
                         </p:column>
-                        
+
                         <p:column headerText="Quantité">
-                            <p:inputNumber value="#{ligne.quantite}" minValue="1" maxValue="99" 
-                                          decimalPlaces="0" size="2">
-                                <p:ajax event="change" listener="#{panierBean.mettreAJourQuantite(ligne)}" 
+                            <p:inputNumber value="#{ligne.quantite}" minValue="1" maxValue="99"
+                                          decimalPlaces="0" size="2" styleClass="quantity-input">
+                                <p:ajax event="change" listener="#{panierBean.mettreAJourQuantite(ligne)}"
                                         update="cartTable totalPanel" />
                             </p:inputNumber>
                         </p:column>
-                        
+
                         <p:column headerText="Total">
                             <h:outputText value="#{ligne.prixUnitaire * ligne.quantite} €" />
                         </p:column>
-                        
+
                         <p:column headerText="Actions">
-                            <p:commandButton icon="pi pi-trash" action="#{panierBean.supprimerLigne(ligne)}" 
+                            <p:commandButton icon="pi pi-trash" action="#{panierBean.supprimerLigne(ligne)}"
                                            update="cartForm" styleClass="ui-button-danger" />
                         </p:column>
                     </p:dataTable>
-                    
+
                     <p:panel id="totalPanel" styleClass="cart-total">
                         <h3>Total: #{panierBean.calculerTotal()} €</h3>
-                        
-                        <p:commandButton value="Continuer les achats" action="vitrine?faces-redirect=true" 
-                                       styleClass="ui-button-secondary" />
-                        
-                        <p:commandButton value="Valider la commande" action="#{panierBean.validerCommande}" 
-                                       rendered="#{utilisateurBean.connecte}"
-                                       styleClass="ui-button-success" />
-                        
-                        <p:button value="Se connecter pour commander" outcome="connexion" 
-                                rendered="#{!utilisateurBean.connecte}"
-                                styleClass="ui-button-info" />
+
+                        <div class="cart-actions">
+                            <p:commandButton value="Continuer les achats" action="vitrine?faces-redirect=true"
+                                           styleClass="ui-button-secondary" />
+
+                            <p:commandButton value="Valider la commande" action="#{panierBean.validerCommande}"
+                                           rendered="#{utilisateurBean.connecte}"
+                                           styleClass="ui-button-success" />
+
+                            <p:button value="Se connecter pour commander" outcome="connexion"
+                                    rendered="#{!utilisateurBean.connecte}"
+                                    styleClass="ui-button-info" />
+                        </div>
                     </p:panel>
                 </p:panel>
-                
-                <p:panel header="Votre panier est vide" rendered="#{empty panierBean.panier.lignesPanier}">
+
+                <p:panel header="Votre panier est vide" rendered="#{empty panierBean.panier.lignesPanier}" styleClass="empty-cart">
                     <p>Vous n'avez aucun article dans votre panier.</p>
                     <p:button value="Découvrir nos produits" outcome="vitrine" styleClass="ui-button-primary" />
                 </p:panel>
             </h:form>
         </main>
-        
+
         <footer>
-            <p>2023 E-Commerce JSF. Tous droits réservés.</p>
+            <p>© 2023 E-Commerce JSF. Tous droits réservés.</p>
         </footer>
     </div>
 </h:body>
